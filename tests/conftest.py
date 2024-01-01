@@ -19,11 +19,8 @@ TestingSessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engin
 
 
 def create_session():
-    db = TestingSessionLocal()
-    try:
+    with TestingSessionLocal() as db:
         yield db
-    finally:
-        db.close()
 
 
 def override_get_db():

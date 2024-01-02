@@ -24,3 +24,6 @@ jobs:
         pytest --cov
     - name: Upload coverage to Codecov
       uses: codecov/codecov-action@v2
+    - name: Lint with flake8
+      run: |
+        flake8

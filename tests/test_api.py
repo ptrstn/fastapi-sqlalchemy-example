@@ -1,3 +1,6 @@
+from mypackage.crud import get_user_by_email
+
+
 def test_read_main(test_client):
     response = test_client.get("/api")
 
@@ -32,6 +35,9 @@ def test_post_user(test_client, test_db):
     assert content["email"] == "test@example.com"
     assert "id" in content
     assert type(content["id"]) is int
+
+    user = get_user_by_email(test_db, email=test_user["email"])
+    assert user.email == test_user["email"]
 
     # Duplicate User
     response = test_client.post("/api/users/", json=test_user)

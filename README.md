@@ -54,7 +54,7 @@ The tests for this application use an in-memory SQLite database.
 Before each test module, a new database is created. 
 This approach keeps the tests isolated, ensuring that changes made in one test do not affect any others.
 The application's main database connection is overwritten in the testing environment to use the in-memory SQLite database instead. 
-This is done by overriding the get_db dependency in the tests, which supplies the FastAPI application with the database session. 
+This is done by overriding the get_db dependency in the tests [conftest.py](/tests/conftest.py), which supplies the FastAPI application with the database session. 
 We replace the standard application database with the session of our in-memory SQLite database instead.
 By doing this, we can test the application's interaction with the database, without modifying the actual database. 
 Also, using an in-memory SQLite database makes these tests much faster to run compared to if they were to use a standard SQL database.

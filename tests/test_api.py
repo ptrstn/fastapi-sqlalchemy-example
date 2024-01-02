@@ -51,3 +51,10 @@ def test_get_users_after_post(test_client):
     assert response.headers["content-type"] == "application/json"
     content = response.json()
     assert len(content) == 1
+
+
+def test_create_item(test_client):
+    item = {"title": "test name", "description": "test description"}
+    response = test_client.post("/api/items/", json=item)
+    assert response.status_code == 201
+    assert response.json() == item

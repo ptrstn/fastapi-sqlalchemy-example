@@ -1,13 +1,11 @@
 from typing import List
 
 from fastapi import APIRouter, Depends, HTTPException, status
-from fastapi.responses import JSONResponse
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
 
 from mypackage import schemas, crud
 from mypackage.database import get_db
-
 
 router = APIRouter(tags=["users"])
 

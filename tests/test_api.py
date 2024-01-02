@@ -76,7 +76,7 @@ def test_create_item_for_user(test_client):
     assert user["email"] == expected_email
     user_id = user["id"]
 
-    item = {"title": "Item2", "description": "Item2 description"}
+    item = {"title": "Item2"}
     response = test_client.post(f"/api/users/{user_id}/items/", json=item)
     assert response.status_code == 201
 

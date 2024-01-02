@@ -1,3 +1,5 @@
+from typing import Optional
+
 from pydantic import BaseModel, ConfigDict
 
 
@@ -18,7 +20,7 @@ class User(UserBase):
 
 class ItemBase(BaseModel):
     title: str
-    description: str
+    description: Optional[str] = None
 
 
 class ItemCreate(ItemBase):

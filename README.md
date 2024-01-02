@@ -12,6 +12,17 @@ This code is in the public domain, so feel free to do with it whatever you want.
 
 ## Installation
 
+Clone the repository and set up a virtual environment:
+
+```bash
+git clone https://github.com/ptrstn/fastapi-sqlalchemy-example/
+cd fastapi-sqlalchemy-example
+python -m venv venv
+. venv/bin/activate
+```
+
+Then install the package (and the optional testing dependencies) with:
+
 ```bash
 pip install -e .[test]
 ```

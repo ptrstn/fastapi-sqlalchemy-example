@@ -1,4 +1,5 @@
 ![example workflow](https://github.com/ptrstn/fastapi-sqlalchemy-example/actions/workflows/python-package.yml/badge.svg)
+[![codecov](https://codecov.io/gh/ptrstn/fastapi-sqlalchemy-example/branch/master/graph/badge.svg)](https://codecov.io/gh/ptrstn/fastapi-sqlalchemy-example)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 [![License: Unlicense](https://img.shields.io/badge/license-Unlicense-blue.svg)](http://unlicense.org/)
 

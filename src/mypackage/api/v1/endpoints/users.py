@@ -25,11 +25,9 @@ def create_user(user: schemas.UserCreate, db: Session = Depends(get_db)):
     except IntegrityError:
         db.rollback()
         existing_user = crud.get_user_by_email(db=db, email=user.email)
-        if existing_user:
-            raise HTTPException(
-                status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
-                detail="Email already registered",
-            )
-        raise
+        raise HTTPException(
+            status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+            detail=f"Email '{existing_user.email}' already registered",
+        )
 
     return db_user

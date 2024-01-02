@@ -42,7 +42,7 @@ def test_post_user(test_client, test_db):
     # Duplicate User
     response = test_client.post("/api/users/", json=test_user)
     assert response.status_code == 422
-    assert response.json()["detail"] == "Email already registered"
+    assert response.json()["detail"] == "Email 'test@example.com' already registered"
 
 
 def test_get_users_after_post(test_client):

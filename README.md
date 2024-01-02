@@ -2,7 +2,7 @@
 [![codecov](https://codecov.io/gh/ptrstn/fastapi-sqlalchemy-example/branch/master/graph/badge.svg)](https://codecov.io/gh/ptrstn/fastapi-sqlalchemy-example)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 [![License: Unlicense](https://img.shields.io/badge/license-Unlicense-darkblue.svg)](http://unlicense.org/)
-![Python Version](https://img.shields.io/badge/python-3.7%20%7C%203.8%20%7C%203.9%20%7C%203.10%20%7C%203.11%20%7C%203.12-blue)
+![Python Version](https://img.shields.io/badge/python-3.7%2B-blue)
 
 # FastAPI + SQLAlchemy Example Package
 

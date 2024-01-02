@@ -33,8 +33,10 @@ def test_post_user(test_client, test_db):
 
     assert "email" in content
     assert content["email"] == "test@example.com"
+    assert "password" not in content
     assert "id" in content
     assert type(content["id"]) is int
+    assert content["is_active"]
 
     user = get_user_by_email(test_db, email=test_user["email"])
     assert user.email == test_user["email"]
@@ -51,6 +53,11 @@ def test_get_users_after_post(test_client):
     assert response.headers["content-type"] == "application/json"
     content = response.json()
     assert len(content) == 1
+    for user in content:
+        assert "email" in user
+        assert "password" not in user
+        assert "id" in user
+        assert "is_active" in user
 
 
 def test_create_item(test_client):

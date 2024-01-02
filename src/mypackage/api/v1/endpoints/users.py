@@ -18,7 +18,11 @@ def read_users(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
     return users
 
 
-@router.post("/users/", status_code=status.HTTP_201_CREATED)
+@router.post(
+    "/users/",
+    response_model=schemas.User,
+    status_code=status.HTTP_201_CREATED,
+)
 def create_user(user: schemas.UserCreate, db: Session = Depends(get_db)):
     try:
         db_user = crud.create_user(db, user)

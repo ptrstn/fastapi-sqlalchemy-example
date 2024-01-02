@@ -65,3 +65,24 @@ def test_create_item(test_client):
     response = test_client.post("/api/items/", json=item)
     assert response.status_code == 201
     assert response.json() == item
+
+
+def test_create_item_for_user(test_client):
+    response = test_client.get("/api/users")
+    content = response.json()
+    assert len(content) == 1
+    user = content[0]
+    expected_email = "test@example.com"
+    assert user["email"] == expected_email
+    user_id = user["id"]
+
+    item = {"title": "Item2", "description": "Item2 description"}
+    response = test_client.post(f"/api/users/{user_id}/items/", json=item)
+    assert response.status_code == 201
+
+    item_response_content = response.json()
+    assert item_response_content["owner_id"] == user_id
+
+    response = test_client.post(f"/api/users/{user_id + 1}/items/", json=item)
+    assert response.status_code == 404
+    assert response.json()["detail"] == "User with id '2' not found"

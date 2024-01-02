@@ -1,3 +1,4 @@
+from sqlalchemy.exc import NoResultFound
 from sqlalchemy.orm import Session
 from mypackage import models, schemas
 
@@ -27,4 +28,18 @@ def create_item(db: Session, item: schemas.ItemCreate):
     db.add(db_item)
     db.commit()
     db.refresh(db_item)
+    return db_item
+
+
+def create_item_for_user(db: Session, user_id: int, item: schemas.ItemCreate):
+    db_user = db.get(models.User, user_id)
+
+    if not db_user:
+        raise NoResultFound(f"User with id {user_id} found")
+
+    db_item = models.Item(**item.model_dump(), owner=db_user)
+    db.add(db_item)
+    db.commit()
+    db.refresh(db_item)
+
     return db_item

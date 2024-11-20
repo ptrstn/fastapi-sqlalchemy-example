@@ -1,30 +1,30 @@
-import os
+from sqlalchemy import Engine, StaticPool, create_engine
+from sqlmodel import SQLModel, Session
 
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker, DeclarativeBase, declarative_base
-
-DEFAULT_DATABASE_URL = "sqlite:///database.db"
-SQLALCHEMY_DATABASE_URL = os.getenv("SQLALCHEMY_DATABASE_URL", DEFAULT_DATABASE_URL)
-
-# https://fastapi.tiangolo.com/tutorial/sql-databases/#note
-engine = create_engine(
-    url=SQLALCHEMY_DATABASE_URL,
-    connect_args={"check_same_thread": False},
-)
-
-SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
-
-Base: DeclarativeBase = declarative_base()
+from mypackage.settings import DatabaseSettings, database_settings
 
 
-def init_db():
-    Base.metadata.create_all(bind=engine)
+def create_engine_from_config(config: DatabaseSettings = database_settings) -> Engine:
+    kwargs = {}
+    if config.dialect == "sqlite":
+        kwargs["connect_args"] = {"check_same_thread": False}
+    if not config.database or config.database == ":memory:":
+        kwargs["poolclass"] = StaticPool
+
+    return create_engine(config.database_url, **kwargs)
 
 
-def drop_db():
-    Base.metadata.drop_all(bind=engine)
+engine = create_engine_from_config(config=database_settings)
 
 
-def get_db():
-    with SessionLocal() as db:
-        yield db
+def create_db_and_tables():
+    SQLModel.metadata.create_all(engine)
+
+
+def drop_db() -> None:
+    SQLModel.metadata.drop_all(engine)
+
+
+def get_session() -> Session:
+    with Session(engine) as session:
+        yield session

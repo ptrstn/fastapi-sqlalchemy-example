@@ -1,25 +1,21 @@
-from sqlalchemy import Boolean, Column, ForeignKey, Integer, String
-from sqlalchemy.orm import relationship
-from .database import Base
+from typing import List, Optional
+
+from sqlmodel import Field, Relationship, SQLModel
 
 
-class User(Base):
-    __tablename__ = "users"
+class User(SQLModel, table=True):
+    id: Optional[int] = Field(default=None, primary_key=True, index=True)
+    email: str = Field(index=True, unique=True)
+    password: str
+    is_active: bool = Field(default=True)
 
-    id = Column(Integer, primary_key=True, index=True)
-    email = Column(String, unique=True, index=True)
-    password = Column(String)
-    is_active = Column(Boolean, default=True)
-
-    items = relationship("Item", back_populates="owner")
+    items: List["Item"] = Relationship(back_populates="owner")
 
 
-class Item(Base):
-    __tablename__ = "items"
+class Item(SQLModel, table=True):
+    id: Optional[int] = Field(default=None, primary_key=True, index=True)
+    title: str = Field(index=True)
+    description: Optional[str] = Field(default=None, index=True)
+    owner_id: Optional[int] = Field(default=None, foreign_key="user.id")
 
-    id = Column(Integer, primary_key=True, index=True)
-    title = Column(String, index=True)
-    description = Column(String, index=True)
-    owner_id = Column(Integer, ForeignKey("users.id"))
-
-    owner = relationship("User", back_populates="items")
+    owner: Optional["User"] = Relationship(back_populates="items")

@@ -1,7 +1,8 @@
 # src/mypackage/api/api_v1/api.py
 
 from fastapi import APIRouter
-from .endpoints import users, items
+
+from .endpoints import items, users
 
 api_router = APIRouter(prefix="/api")
 

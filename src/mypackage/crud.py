@@ -1,5 +1,6 @@
 from sqlalchemy.exc import NoResultFound
 from sqlalchemy.orm import Session
+
 from mypackage import models, schemas
 
 
@@ -35,7 +36,7 @@ def create_item_for_user(db: Session, user_id: int, item: schemas.ItemCreate):
     db_user = db.get(models.User, user_id)
 
     if not db_user:
-        raise NoResultFound(f"User with id {user_id} found")
+        raise NoResultFound(f"User with id {user_id} not found")
 
     db_item = models.Item(**item.model_dump(), owner=db_user)
     db.add(db_item)

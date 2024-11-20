@@ -1,3 +1,5 @@
+from sqlmodel import select
+
 from mypackage.models import User, Item
 
 
@@ -47,12 +49,15 @@ def test_create_users_and_items(session):
     session.add(item3)
     session.commit()
 
-    assert len(session.query(User).all()) == 2
+    all_users = session.exec(select(User)).all()
+    all_items = session.exec(select(Item)).all()
+
+    assert len(all_users) == 2
     assert len(user1.items) == 2
     assert user1.items[0].title == "Item 1"
     assert user1.items[1].description == "Description for Item 2"
     assert len(user2.items) == 1
-    assert len(session.query(Item).all()) == 3
+    assert len(all_items) == 3
 
     assert item1.owner == user1
     assert item2.owner == user1

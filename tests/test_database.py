@@ -1,3 +1,5 @@
+import pytest
+from sqlalchemy.exc import SAWarning
 from sqlmodel import select
 
 from mypackage.models import User, Item
@@ -40,9 +42,10 @@ def test_create_users_and_items(session):
     assert len(user1.items) == 2
     assert len(user2.items) == 1
 
-    session.refresh(user1)
-    assert len(user1.items) == 0  # Transient state of item1 and item2
-    assert len(user2.items) == 1
+    with pytest.warns(SAWarning):
+        session.refresh(user1)
+        assert len(user1.items) == 0  # Transient state of item1 and item2
+        assert len(user2.items) == 1
 
     session.add(item1)
     session.add(item2)
